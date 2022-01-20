@@ -1,0 +1,154 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="alcance.list">
+      <field name="name">alcance list</field>
+      <field name="model">alcance.alcance</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="alcance"/>
+          <field name="company_id"/>
+          <field name="descripcion" optional="1"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="alcance.form">
+      <field name="name">alcance form</field>
+      <field name="model">alcance.alcance</field>
+      <field name="arch" type="xml">
+        <form string="Alcance Implementaacion">
+            <sheet>
+                <group colspan="12">
+                    <div>
+                      <field name="image" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;image_128&quot;}"/>
+                    </div>
+                </group>
+                <h1 class="oe_title">
+                    <lable for="alcance"  style="font-weight:bold;">Alcance</lable>
+                    <field name="alcance" required="True"/>
+                </h1>
+                <group colspan="12">
+                    <group colspan="5">
+                        
+                        <field name="company_id" groups="base.group_multi_company"/>                        
+                        <field name="activo"/>
+                    </group>
+                    <notebook colspan="12">
+                         <page string="Descripcion" autofocus="autofocus">
+                          <field name="descripcion"/>
+                        </page>
+                    </notebook>
+                </group>
+            </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="alcance.alcance_plantilla_list">
+      <field name="name">Plantilla de alcances</field>
+      <field name="model">alcance.plantilla</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="alcance"/>
+          <field name="company_id"/>
+        </tree>
+      </field>
+    </record>    
+
+    <record model="ir.ui.view" id="alcance.alcance_plantilla_form">
+      <field name="name">Plantilla de alcances</field>
+      <field name="model">alcance.plantilla</field>
+      <field name="arch" type="xml">
+        <form string="Lineas Alcances">
+            <sheet>
+                <div class="oe_title">
+                <h1>
+                    <field name="alcance" string="Plantilla Alcances" default_focus="1" placeholder="Plantilla Alcances" required="True"/>
+                    </h1>
+                </div>                
+                <group colspan="12">
+                    <group colspan="5">
+                        <field name="activo" string="Activo"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                    </group>
+                    <group colspan="12" class="mt-2 mt-md-0">
+                        <!-- <field name="notes" widget="text"/> -->
+                    </group>
+                </group>
+            <notebook>
+                <page string="Alcances" widget="One2many_list"> 
+                    <field name="line_ids" context="{'default_alcance_id': id}">
+                        <tree editable="bottom">
+                            <control>
+                                <create name="add_line_control" string="Add a line"/>
+                                <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                            </control>                            
+                            <field name="alcance_id"/>
+                            <field name="descripcion"/>
+                            <field name="tiempo"/>
+                            <field name="udm"/>
+                        </tree>
+                </field>
+                </page>
+            </notebook>
+            </sheet>
+        </form>
+      </field>
+    </record>
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="alcance.action_window">
+      <field name="name">Alcances Plantillas</field>
+      <field name="res_model">alcance.alcance</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="alcance.action_window_alcance_plantilla">
+      <field name="name">Plantilla de alcance</field>
+      <field name="res_model">alcance.plantilla</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="alcance.action_server">
+      <field name="name">alcance server</field>
+      <field name="model_id" ref="model_alcance_alcance"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+
+    <menuitem name="Proyectos" id="alcance.menu_root" parent="sale.product_menu_catalog"/>
+    <!-- menu categories -->
+<!-- 
+    <menuitem name="Alcance Implementacion" id="alcance.menu_1" parent="alcance.menu_root"/>
+-->
+    <!-- actions -->
+
+   <menuitem name="Alcances Plantillas" id="alcance.menu_1_list" parent="alcance.menu_root"
+              action="alcance.action_window"/>
+   
+   <menuitem name="Plantilla de alcance" id="alcance.menu_2_list" parent="alcance.menu_root"
+              action="alcance.action_window_alcance_plantilla"/>
+<!--  
+    <menuitem name="Server to list" id="alcance" parent="alcance.menu_2"
+              action="alcance.action_server"/> -->
+
+  </data>
+</odoo>

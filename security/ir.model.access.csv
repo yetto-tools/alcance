@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_alcance_alcance,access_alcance_alcance,model_alcance_alcance,base.group_user,1,1,1,1
+access_alcance_plantilla,access_alcance_plantilla,model_alcance_plantilla,base.group_user,1,1,1,1
+access_alcance_lines,access_alcance_lines,model_alcance_lines,base.group_user,1,1,1,1
